@@ -5,7 +5,7 @@ const WEATHER_API_KEY='a1b033436a7ee971bf921ec647240fef';
 
 
 const Weather = () => {
-    let temp
+    
     const [values, setValues] = useState({
         name: "",
         min: "",
@@ -37,27 +37,28 @@ const Weather = () => {
                  setValues({...values, error: resp.message})   
              }else{   
             if(resp) {
+                
                 setValues({...values,
                     city: resp.name,
                     country: resp.sys.country,
+                    icon: getIcon(weatherIcon, resp.weather[0].id),
                     feels: resp.main.feels_like,
                     min: getCelsious(resp.main.temp_min),
                     max: getCelsious(resp.main.temp_max),
-                    icon: resp.weather[0].icon,
                     description: resp.weather[0].description,
                     dt: getDateTiem(resp.dt),
-                    rangeId: resp.weather[0].id   
+                    rangeId: resp.weather[0].id 
                 })
+                
             } else {
                 console.log('no response data received')
             }
              }
            })
            .catch(err => {console.log(err)})
-            
-     
     }
     
+    console.log(values)
     //get icons based on weather
     const weatherIcon = {
             thunderstorm : "wi-thrundestorm",
@@ -73,17 +74,24 @@ const Weather = () => {
     const getIcon = (weatherIcon, rangeId) => {
         switch(true){
             case rangeId >= '200' && rangeId <= '232' :
-                setValues({...values,icon: weatherIcon.thunderstorm})
+               return  weatherIcon.thunderstorm
+               break;
             case rangeId >= '300' && rangeId <= '321' :
-                setValues({...values, icon: weatherIcon.drizzle})
+                return weatherIcon.drizzle
+               break;
             case rangeId >= '500' && rangeId <= '531' :
-                setValues({...values, icon: weatherIcon.rain})
+                return weatherIcon.rain
+               break;
             case rangeId >= '600' && rangeId <= '622' :
-                setValues({...values, icon: weatherIcon.snow})
+                return weatherIcon.snow
+             break;
             case rangeId >= '700' && rangeId <= '781' :
-                setValues({...values, icon: weatherIcon.Atmosphere})
+                return  weatherIcon.Atmosphere
+             break;
             case rangeId >= '800' && rangeId <= '804' :
-                setValues({...values, icon: weatherIcon.drizzle})
+                return weatherIcon.clouds
+             break;
+        
         }
        
         
@@ -143,7 +151,7 @@ const Weather = () => {
            value={name}
            />
          <button className="btn btn-outline-warning btn-rounded btn-sm b-4 mt-2"
-         onClick={onSubmit}>Search</button>
+         onClick={onSubmit}>Get weather</button>
         </div>
         <div>
             
@@ -155,6 +163,9 @@ const Weather = () => {
           <h3>
           { icon ? <i className={`wi ${icon}`}></i> : null}
           </h3>
+       <div>
+       <span>{description}</span>
+       </div>
              <span>{dt}</span>
         </div>
     )
