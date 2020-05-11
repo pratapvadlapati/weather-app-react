@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+  background: url('./assets/bg2.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 750px;
+  width: 100%; 
+}
+
+
+.container {
+  padding: 4;
+  border: 2;
+}
+
+.active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+  border-bottom: 1px solid #4dd0e1;
+  box-shadow: 0 1px 0 0 #4dd0e1;
+}
+
+.form-control{
+  background-color: transparent!important;
+  box-shadow: none!important;
+  font-family: sans-serif;
+  
+}
